@@ -32,9 +32,9 @@ free(command);
 return (NULL);
 }
 perror("getline");
- exit(EXIT_FAILURE);
-    }
-    return (command);
+exit(EXIT_FAILURE);
+}
+return (command);
 }
 /**
  * execute_command - Execute a command using execve.
@@ -80,9 +80,16 @@ waitpid(pid, &status, 0);
 */
 void exit_shell(void)
 {
-    exit(EXIT_SUCCESS);
+exit(EXIT_SUCCESS);
 }
-
+/**
+ * main - Entry point for the shell program.
+ *
+ * This function displays the shell prompt, reads user commands,
+ * and executes them using the execute_command function.
+ *
+ * Return: Always 0 (success).
+ */
 int main(void)
 {
 char *command;
