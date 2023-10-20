@@ -1,41 +1,44 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "shell.h"
+
 /**
- * main - Entry point for the shell program.
+ * main - entry point
+ * @ac: arg count
+ * @av: arg vector
  *
- * This function displays the shell prompt, reads user commands,
- * and executes them using the execute_command function.
- *
- * Return: Always 0 (success).
+ * Return: 0 on success, 1 on error
  */
-int main(void)
+int main(int ac, char **av)
 {
-char *command;
-while (1)
-{
-display_prompt();
-command = read_command();
-if (command == NULL)
-{
-printf("\n");
-break;
-}
-/* Remove the trailing newline character */
-command[strlen(command) - 1] = '\0';
-if (strcmp(command, "exit") == 0)
-{
-exit_shell();
-}
-else if (strcmp(command, "env") == 0)
-{
-print_environment();
-}
-else
-{
-execute_command(command);
-}
-free(command);
-}
-return (0);
+	info_t info[] = { INFO_INIT };
+	int fd = 2;
+
+	asm ("mov %1, %0\n\t"
+		"add $3, %0"
+		: "=r" (fd)
+		: "r" (fd));
+
+	if (ac == 2)
+	{
+		fd = open(av[1], O_RDONLY);
+		if (fd == -1)
+		{
+			if (errno == EACCES)
+				exit(126);
+			if (errno == ENOENT)
+			{
+				_eputs(av[0]);
+				_eputs(": 0: Can't open ");
+				_eputs(av[1]);
+				_eputchar('\n');
+				_eputchar(BUF_FLUSH);
+				exit(127);
+			}
+			return (EXIT_FAILURE);
+		}
+		info->readfd = fd;
+	}
+	populate_env_list(info);
+	read_history(info);
+	hsh(info, av);
+	return (EXIT_SUCCESS);
 }
