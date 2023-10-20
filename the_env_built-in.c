@@ -76,18 +76,11 @@ waitpid(pid, &status, 0);
 }
 }
 /**
- * exit_shell - Exits the shell.
- */
-void exit_shell(void)
-{
-exit(EXIT_SUCCESS);
-}
-/**
  * print_environment - Print the current environment variables.
  */
 void print_environment(void)
 {
-extern char **environ;
+char **environ;
 int i = 0;
 while (environ[i] != NULL)
 {
@@ -95,6 +88,14 @@ printf("%s\n", environ[i]);
 i++;
 }
 }
+/**
+ * main - Entry point for the shell program.
+ *
+ * This function displays the shell prompt, reads user commands,
+ * and executes them using the execute_command function.
+ *
+ * Return: Always 0 (success).
+ */
 int main(void)
 {
 char *command;

@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "shell.h"
+/**
+ * main - Entry point for the shell program.
+ *
+ * This function displays the shell prompt, reads user commands,
+ * and executes them using the execute_command function.
+ *
+ * Return: Always 0 (success).
+ */
 int main(void)
 {
 char *command;
@@ -29,5 +37,5 @@ execute_command(command);
 }
 free(command);
 }
-return 0;
+return (0);
 }
