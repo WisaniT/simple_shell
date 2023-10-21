@@ -1,5 +1,5 @@
 #include "shell.h"
-int main() {
+
 /**
  * interactive - returns true if shell is interactive mode
  * @info: struct address
@@ -71,6 +71,4 @@ int _atoi(char *s)
 		output = result;
 
 	return output;
-}
-return 0;
 }
