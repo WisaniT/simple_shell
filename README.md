@@ -1,1 +1,4 @@
-Sipmle_shell project 4th try 
+0x16. C - Simple Shell
+C
+Group project
+Syscall
